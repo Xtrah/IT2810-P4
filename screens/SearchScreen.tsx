@@ -68,6 +68,7 @@ export default function SearchScreen({
               accessibilityLabel="Search for pokemon"
               fontSize="16"
               autoFocus
+              width="100%"
               value={searchText}
               type="text"
               placeholder="Enter pokemon name"
