@@ -18,6 +18,10 @@ import { GET_POKEMONS_LIMITED } from '../utils/queries';
 import { Pressable } from 'react-native';
 import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
+import SearchResults from '../components/SearchResults';
+
+// This value aligns with the hardcoded limit in backend
+const ITEM_FETCH_LIMIT = 10;
 
 // This component contains search input and results
 export default function SearchScreen({
@@ -33,19 +37,6 @@ export default function SearchScreen({
     getQuery();
   }, []);
 
-  if (error) {
-    return (
-      <Alert status="error">
-        <Icon as={MaterialIcons} name="dangerous" />
-        There was an error processing your request
-      </Alert>
-    );
-  }
-
-  if (loading) {
-    return <Spinner color="red.500" accessibilityLabel="Loading data" />;
-  }
-
   // Query data when submitting
   function onSubmit() {
     getQuery({
@@ -57,6 +48,13 @@ export default function SearchScreen({
 
   function onToggle() {
     // TODO: Handle toggling filter
+  }
+
+  // Sent to card for navigation
+  function navigateToCard(pokemonId: string) {
+    navigation.navigate('PokemonCardScreen', {
+      pokemonId: pokemonId,
+    });
   }
 
   return (
@@ -99,23 +97,11 @@ export default function SearchScreen({
               }}
             />
           </HStack>
-          <FlatList
-            alignSelf="stretch"
-            m={2}
-            data={data?.pokemons}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <Pressable
-                accessibilityLabel="Navigate to specific Pokemon Card Screen"
-                onPress={() =>
-                  navigation.navigate('PokemonCardScreen', {
-                    pokemonId: item._id,
-                  })
-                }
-              >
-                <PokemonCard pokemon={item} />
-              </Pressable>
-            )}
+          <SearchResults
+            data={data}
+            navigateToCard={navigateToCard}
+            loading={loading}
+            error={error}
           />
         </Flex>
       </ScrollView>
