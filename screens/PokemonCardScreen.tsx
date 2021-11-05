@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'native-base';
 import { RootStackScreenProps } from '../types/navigation';
+import ScreenWrapper from '../components/ScreenWrapper';
 
 function PokemonCardScreen({
   route,
@@ -8,9 +9,11 @@ function PokemonCardScreen({
   const { pokemonId } = route.params;
   // TODO: Add the rest of the detail view
   return (
-    <View>
-      <Text>Pokemon id {pokemonId}</Text>
-    </View>
+    <ScreenWrapper>
+      <View>
+        <Text>Pokemon id {pokemonId}</Text>
+      </View>
+    </ScreenWrapper>
   );
 }
 
