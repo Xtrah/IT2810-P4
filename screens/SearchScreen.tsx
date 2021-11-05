@@ -15,9 +15,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import PokemonCard from '../components/PokemonCard';
 import { useLazyQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED } from '../utils/queries';
+import { TouchableOpacity } from 'react-native';
+import { RootStackScreenProps } from '../types/navigation';
 
 // This component contains search input and results
-export default function SearchScreen() {
+export default function SearchScreen({
+  navigation,
+}: RootStackScreenProps<'Root'>) {
   const [searchText, onChangeSearchText] = useState('');
 
   const [getQuery, { data, loading, error }] =
@@ -97,7 +101,17 @@ export default function SearchScreen() {
           m={2}
           data={data?.pokemons}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <PokemonCard pokemon={item} />}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('PokemonCardScreen', {
+                  pokemonId: item._id,
+                })
+              }
+            >
+              <PokemonCard pokemon={item} />
+            </TouchableOpacity>
+          )}
         />
       </Flex>
     </ScrollView>
