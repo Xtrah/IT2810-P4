@@ -5,6 +5,7 @@
  */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 
 import SearchScreen from '../screens/SearchScreen';
@@ -13,7 +14,7 @@ import CreatePokemonScreen from '../screens/CreatePokemonScreen';
 import { Icon, IconButton, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import PokemonCardScreen from '../screens/PokemonCardScreen';
-import { TouchableOpacity } from 'react-native';
+import { Pressable } from 'react-native';
 // Import didn't work with TS, so using require.
 const pokemonball = require('../assets/images/pokemonball.png');
 
@@ -31,7 +32,10 @@ function RootNavigator() {
         headerLeft: () => null, // Remove back button
         headerTitle: () => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate('Root')}>
+            <Pressable
+              accessibilityLabel="Navigate to home page"
+              onPress={() => navigation.navigate('Root')}
+            >
               <Image
                 ml={2}
                 borderRadius="xl"
@@ -40,7 +44,7 @@ function RootNavigator() {
                 src={pokemonball}
                 alt="pokeball home button"
               />
-            </TouchableOpacity>
+            </Pressable>
           );
         },
         headerRight: () => {
@@ -65,7 +69,7 @@ function RootNavigator() {
       <Stack.Screen
         name="Root"
         component={SearchScreen}
-        options={{ title: 'Search & results' }}
+        options={{ title: 'Pokedex' }}
       />
       <Stack.Screen
         name="CreatePokemonScreen"
