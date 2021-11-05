@@ -9,7 +9,7 @@ import {
   Spinner,
   ScrollView,
 } from 'native-base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import PokemonCard from '../components/PokemonCard';
@@ -22,6 +22,11 @@ export default function SearchScreen() {
 
   const [getQuery, { data, loading, error }] =
     useLazyQuery(GET_POKEMONS_LIMITED);
+
+  // Query data from initial render
+  useEffect(() => {
+    getQuery();
+  }, []);
 
   if (error) {
     return (

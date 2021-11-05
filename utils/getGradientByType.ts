@@ -5,7 +5,7 @@
  * @param type string depicting Pokémon-type
  * @returns gradient values on format (gradient-angle, hex1 colorstop1, hex1 colorstop2)
  */
-const getGradientByType = (type: string) => {
+const getGradientByType = (type: string): string[] => {
   const gradientMap = new Map([
     ['normal', ['#A8A878', '#645D23']],
     ['fire', ['#F08030', '#a04009']],
@@ -27,7 +27,7 @@ const getGradientByType = (type: string) => {
     ['fairy', ['#f3bbfa', '#ce61c8']],
   ]);
 
-  return gradientMap.get(type) ? gradientMap.get(type) : ['#A8A878', '#645D23'];
+  return gradientMap.get(type) || ['#A8A878', '#645D23'];
 };
 
 export default getGradientByType;

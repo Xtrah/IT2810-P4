@@ -16,7 +16,7 @@ const PokemonCard = ({ pokemon }: Props) => {
     // TODO: Should link to to={`/project3/pokemon/${pokemon._id}`}
     <TouchableOpacity style={styles.wrapper}>
       <LinearGradient
-        colors={getGradientByType(pokemon.types[0]) || []}
+        colors={getGradientByType(pokemon.types[0])}
         style={styles.linearGradient}
       >
         <Flex
