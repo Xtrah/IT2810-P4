@@ -28,14 +28,8 @@ export default function SearchScreen({
   const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
   const [searchText, onChangeSearchText] = useState('');
 
-  const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
-    GET_POKEMONS_LIMITED,
-    {
-      variables: {
-        name: searchText,
-      },
-    }
-  );
+  const [getQuery, { data, loading, error, fetchMore }] =
+    useLazyQuery(GET_POKEMONS_LIMITED);
 
   // Query data from initial render
   useEffect(() => {
