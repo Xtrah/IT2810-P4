@@ -4,47 +4,60 @@ import {
   Input,
   IconButton,
   Icon,
-  FlatList,
-  Alert,
-  Spinner,
   ScrollView,
+  Button,
+  Center,
 } from 'native-base';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import PokemonCard from '../components/PokemonCard';
 import { useLazyQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED } from '../utils/queries';
-import { Pressable } from 'react-native';
 import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
+import SearchResults from '../components/SearchResults';
+
+// This value aligns with the hardcoded limit in backend
+const ITEM_FETCH_LIMIT = 10;
 
 // This component contains search input and results
 export default function SearchScreen({
   navigation,
 }: RootStackScreenProps<'Root'>) {
+  // Start first fetchmore with offset, to add to the already fetched items
+  const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
   const [searchText, onChangeSearchText] = useState('');
 
-  const [getQuery, { data, loading, error }] =
-    useLazyQuery(GET_POKEMONS_LIMITED);
+  const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
+    GET_POKEMONS_LIMITED,
+    {
+      variables: {
+        name: searchText,
+      },
+    }
+  );
 
   // Query data from initial render
   useEffect(() => {
     getQuery();
   }, []);
 
-  if (error) {
-    return (
-      <Alert status="error">
-        <Icon as={MaterialIcons} name="dangerous" />
-        There was an error processing your request
-      </Alert>
-    );
-  }
+  // Query more items and update offset
+  const onLoadMore = () => {
+    if (fetchMore) {
+      fetchMore({
+        variables: {
+          name: searchText,
+          offset,
+        },
+      }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
+    }
+  };
 
-  if (loading) {
-    return <Spinner color="red.500" accessibilityLabel="Loading data" />;
-  }
+  // Reset offset when search text changes
+  useEffect(() => {
+    setOffset(ITEM_FETCH_LIMIT);
+  }, [searchText]);
 
   // Query data when submitting
   function onSubmit() {
@@ -57,6 +70,13 @@ export default function SearchScreen({
 
   function onToggle() {
     // TODO: Handle toggling filter
+  }
+
+  // Sent to card for navigation
+  function navigateToCard(pokemonId: string) {
+    navigation.navigate('PokemonCardScreen', {
+      pokemonId: pokemonId,
+    });
   }
 
   return (
@@ -99,24 +119,26 @@ export default function SearchScreen({
               }}
             />
           </HStack>
-          <FlatList
-            alignSelf="stretch"
-            m={2}
-            data={data?.pokemons}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <Pressable
-                accessibilityLabel="Navigate to specific Pokemon Card Screen"
-                onPress={() =>
-                  navigation.navigate('PokemonCardScreen', {
-                    pokemonId: item._id,
-                  })
-                }
-              >
-                <PokemonCard pokemon={item} />
-              </Pressable>
-            )}
+
+          <SearchResults
+            data={data}
+            navigateToCard={navigateToCard}
+            loading={loading}
+            error={error}
           />
+
+          <Center height="100px">
+            <Button
+              disabled={loading}
+              bgColor="red.500"
+              color="white"
+              h="1.75rem"
+              size="md"
+              onPress={onLoadMore}
+            >
+              Load more
+            </Button>
+          </Center>
         </Flex>
       </ScrollView>
     </ScreenWrapper>
