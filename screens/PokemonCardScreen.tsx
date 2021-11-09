@@ -71,9 +71,8 @@ function PokemonCardScreen({
           <Heading textAlign="left" color="#333">
             {pokemon.name}
             {pokemon.types.map((type: string) => (
-              <Gradient colors={getGradientByType(type)}>
+              <Gradient key={type} colors={getGradientByType(type)}>
                 <Image
-                  key={type}
                   m={2}
                   display="inline"
                   borderRadius="xl"

@@ -25,11 +25,18 @@ export default function SearchScreen({
   navigation,
 }: RootStackScreenProps<'Root'>) {
   // Start first fetchmore with offset, to add to the already fetched items
-  const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
+  const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
-  const [getQuery, { data, loading, error, fetchMore }] =
-    useLazyQuery(GET_POKEMONS_LIMITED);
+  const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
+    GET_POKEMONS_LIMITED,
+    {
+      variables: {
+        name: searchText,
+        offset,
+      },
+    }
+  );
 
   // Query data from initial render
   useEffect(() => {
@@ -42,22 +49,18 @@ export default function SearchScreen({
       fetchMore({
         variables: {
           name: searchText,
-          offset,
+          offset: offset + ITEM_FETCH_LIMIT,
         },
       }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
     }
   };
-
-  // Reset offset when search text changes
-  useEffect(() => {
-    setOffset(ITEM_FETCH_LIMIT);
-  }, [searchText]);
 
   // Query data when submitting
   function onSubmit() {
     getQuery({
       variables: {
         name: searchText,
+        offset,
       },
     });
   }
