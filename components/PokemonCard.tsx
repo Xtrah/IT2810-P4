@@ -1,10 +1,9 @@
 import React from 'react';
 import { Flex, Text, Image } from 'native-base';
-import { StyleSheet } from 'react-native';
 import { PokemonLimited } from '../types/pokemon';
 import getGradientByType from '../utils/getGradientByType';
 import getIconByType from '../utils/getIconByType';
-import { LinearGradient } from 'expo-linear-gradient';
+import Gradient from './Gradient';
 
 interface Props {
   pokemon: PokemonLimited;
@@ -13,10 +12,7 @@ interface Props {
 // PokemonCard is used as list item in search results
 const PokemonCard = ({ pokemon }: Props) => {
   return (
-    <LinearGradient
-      colors={getGradientByType(pokemon.types[0])}
-      style={styles.linearGradient}
-    >
+    <Gradient colors={getGradientByType(pokemon.types[0])}>
       <Flex
         direction="row"
         justifyContent="center"
@@ -49,15 +45,8 @@ const PokemonCard = ({ pokemon }: Props) => {
           alt={pokemon.name}
         />
       </Flex>
-    </LinearGradient>
+    </Gradient>
   );
 };
-
-const styles = StyleSheet.create({
-  linearGradient: {
-    borderRadius: 5,
-    margin: 5,
-  },
-});
 
 export default PokemonCard;
