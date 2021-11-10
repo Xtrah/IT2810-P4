@@ -1,14 +1,13 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { ReactElement } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet } from 'react-native';
 
 interface Props {
-  children: ReactElement;
+  children: React.ReactElement;
   colors: string[];
 }
 
-export default function Gradient({ children, colors }: Props) {
+function Gradient({ children, colors }: Props) {
   return (
     <LinearGradient colors={colors} style={styles.linearGradient}>
       {children}
@@ -22,3 +21,5 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
+
+export default Gradient;

@@ -2,23 +2,21 @@ import React from 'react';
 import {
   Alert,
   Box,
-  Container,
   Flex,
   Heading,
   Icon,
   Spinner,
   Stack,
   Text,
-  View,
   Image,
 } from 'native-base';
+import { useQuery } from '@apollo/client';
+import { MaterialIcons } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
-import { useQuery } from '@apollo/client';
 import { GET_POKEMON } from '../utils/queries';
 import getGradientByType from '../utils/getGradientByType';
 import getIconByType from '../utils/getIconByType';
-import { MaterialIcons } from '@expo/vector-icons';
 import Gradient from '../components/Gradient';
 
 // This renders the detail screen of pokemons
