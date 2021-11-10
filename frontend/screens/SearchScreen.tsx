@@ -8,8 +8,7 @@ import {
   Button,
   Center,
 } from 'native-base';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useLazyQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED } from '../utils/queries';
@@ -25,7 +24,7 @@ export default function SearchScreen({
   navigation,
 }: RootStackScreenProps<'Root'>) {
   // Start first fetchmore with offset, to add to the already fetched items
-  const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
+  const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
@@ -33,13 +32,20 @@ export default function SearchScreen({
     {
       variables: {
         name: searchText,
+        offset,
       },
     }
   );
 
-  // Query data from initial render
   useEffect(() => {
-    getQuery();
+    getQuery({
+      variables: {
+        name: searchText,
+        offset,
+      },
+    });
+    // Disabling to only query first on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Query more items and update offset
@@ -48,22 +54,18 @@ export default function SearchScreen({
       fetchMore({
         variables: {
           name: searchText,
-          offset,
+          offset: offset + ITEM_FETCH_LIMIT,
         },
       }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
     }
   };
-
-  // Reset offset when search text changes
-  useEffect(() => {
-    setOffset(ITEM_FETCH_LIMIT);
-  }, [searchText]);
 
   // Query data when submitting
   function onSubmit() {
     getQuery({
       variables: {
         name: searchText,
+        offset,
       },
     });
   }
@@ -75,7 +77,7 @@ export default function SearchScreen({
   // Sent to card for navigation
   function navigateToCard(pokemonId: string) {
     navigation.navigate('PokemonCardScreen', {
-      pokemonId: pokemonId,
+      pokemonId,
     });
   }
 
@@ -127,18 +129,20 @@ export default function SearchScreen({
             error={error}
           />
 
-          <Center height="100px">
-            <Button
-              disabled={loading}
-              bgColor="red.500"
-              color="white"
-              h="1.75rem"
-              size="md"
-              onPress={onLoadMore}
-            >
-              Load more
-            </Button>
-          </Center>
+          {data?.pokemons && (
+            <Center height="100px">
+              <Button
+                disabled={loading}
+                bgColor="red.500"
+                color="white"
+                h="1.75rem"
+                size="md"
+                onPress={onLoadMore}
+              >
+                Load more
+              </Button>
+            </Center>
+          )}
         </Flex>
       </ScrollView>
     </ScreenWrapper>
