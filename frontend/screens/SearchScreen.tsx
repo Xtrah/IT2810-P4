@@ -29,13 +29,14 @@ export default function SearchScreen({
   const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
+  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
     {
       variables: {
         name: searchText,
-        sortDescending: pokemonFilterVar().sortDescending,
-        type: pokemonFilterVar().type,
+        sortDescending: filterData.pokemonFilter.sortDescending,
+        type: filterData.pokemonFilter.type,
         offset,
       },
     }
@@ -71,13 +72,9 @@ export default function SearchScreen({
     }
   };
 
-  // Reset offset when search text changes
-  useEffect(() => {
-    setOffset(ITEM_FETCH_LIMIT);
-  }, [searchText]);
-
   // Query data when submitting
   function onSubmit() {
+    setOffset(0);
     getQuery({
       variables: {
         name: searchText,

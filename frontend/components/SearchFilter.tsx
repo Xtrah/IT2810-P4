@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -8,9 +8,9 @@ import {
   Select,
   Text,
 } from 'native-base';
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import pokemonTypes from '../constants/pokemonTypes';
-import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
+import { GET_POKEMON_FILTER } from '../utils/queries';
 import setPokemonFilter from '../utils/setPokemonFilter';
 
 interface Props {
@@ -31,9 +31,10 @@ const SearchFilter = ({ show, onSubmit }: Props) => {
   function handleSortChange() {
     // TODO - use JSON-parse to convert string to boolean
     const sortDescending = pokemonSort === 'true'; // Converts string to boolean
+    const type = pokemonType;
     // Applies the filter to the search query
     setPokemonFilter({
-      type: pokemonType,
+      type,
       sortDescending,
     });
     onSubmit(); // Submits the search
@@ -61,7 +62,7 @@ const SearchFilter = ({ show, onSubmit }: Props) => {
             <Select
               defaultValue=""
               placeholder="Choose type"
-              onValueChange={(pokemonType) => setPokemonType(pokemonType)}
+              onValueChange={(filterType) => setPokemonType(filterType)}
             >
               <Select.Item label="Show all" value="" />
               {pokemonTypes.map((type: string) => (
