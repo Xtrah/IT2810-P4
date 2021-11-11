@@ -7,15 +7,17 @@ import {
   ScrollView,
   Button,
   Center,
-} from 'native-base';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useLazyQuery } from '@apollo/client';
-import { GET_POKEMONS_LIMITED } from '../utils/queries';
-import { RootStackScreenProps } from '../types/navigation';
-import ScreenWrapper from '../components/ScreenWrapper';
-import SearchResults from '../components/SearchResults';
+} from "native-base";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from "../utils/queries";
+import { RootStackScreenProps } from "../types/navigation";
+import ScreenWrapper from "../components/ScreenWrapper";
+import SearchResults from "../components/SearchResults";
+import SearchFilter from "../components/SearchFilter";
+import { pokemonFilterVar } from "../cache";
 
 // This value aligns with the hardcoded limit in backend
 const ITEM_FETCH_LIMIT = 10;
@@ -23,19 +25,24 @@ const ITEM_FETCH_LIMIT = 10;
 // This component contains search input and results
 export default function SearchScreen({
   navigation,
-}: RootStackScreenProps<'Root'>) {
+}: RootStackScreenProps<"Root">) {
   // Start first fetchmore with offset, to add to the already fetched items
   const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
-  const [searchText, onChangeSearchText] = useState('');
+  const [searchText, onChangeSearchText] = useState("");
 
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
     {
       variables: {
         name: searchText,
+        sortDescending: pokemonFilterVar().sortDescending,
+        type: pokemonFilterVar().type,
       },
     }
   );
+
+  const [show, setShow] = React.useState(false);
+  const handleToggle = () => setShow(!show);
 
   // Query data from initial render
   useEffect(() => {
@@ -64,17 +71,15 @@ export default function SearchScreen({
     getQuery({
       variables: {
         name: searchText,
+        sortDescending: pokemonFilterVar().sortDescending,
+        type: pokemonFilterVar().type,
       },
     });
   }
 
-  function onToggle() {
-    // TODO: Handle toggling filter
-  }
-
   // Sent to card for navigation
   function navigateToCard(pokemonId: string) {
-    navigation.navigate('PokemonCardScreen', {
+    navigation.navigate("PokemonCardScreen", {
       pokemonId: pokemonId,
     });
   }
@@ -99,26 +104,28 @@ export default function SearchScreen({
               aria-label="Search for pokemon"
               icon={<Icon as={MaterialIcons} name="search" />}
               _icon={{
-                color: 'red.500',
-                size: 'md',
+                color: "red.500",
+                size: "md",
               }}
               _hover={{
-                bg: 'red.500:alpha.20',
+                bg: "red.500:alpha.20",
               }}
             />
             <IconButton
-              onPress={onToggle}
+              onPress={handleToggle}
               aria-label="Open settings"
               icon={<Icon as={MaterialIcons} name="settings" />}
               _icon={{
-                color: 'red.500',
-                size: 'md',
+                color: "red.500",
+                size: "md",
               }}
               _hover={{
-                bg: 'red.500:alpha.20',
+                bg: "red.500:alpha.20",
               }}
             />
           </HStack>
+
+          <SearchFilter show={show} onSubmit={onSubmit} />
 
           <SearchResults
             data={data}

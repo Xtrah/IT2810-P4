@@ -1,10 +1,10 @@
-import React from 'react';
-import { Flex, Text, Image } from 'native-base';
-import { StyleSheet } from 'react-native';
-import { PokemonLimited } from '../types/pokemon';
-import getGradientByType from '../utils/getGradientByType';
-import getIconByType from '../utils/getIconByType';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import { Flex, Text, Image } from "native-base";
+import { StyleSheet } from "react-native";
+import { PokemonLimited } from "../types/pokemon";
+import getGradientByType from "../utils/getGradientByType";
+import getIconByType from "../utils/getIconByType";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface Props {
   pokemon: PokemonLimited;
@@ -44,7 +44,7 @@ const PokemonCard = ({ pokemon }: Props) => {
           src={pokemon.imageUrl}
           // Fallback to Bulbasaur if image doesn't load
           fallbackSource={{
-            uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',
+            uri: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
           }}
           alt={pokemon.name}
         />
