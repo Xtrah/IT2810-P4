@@ -1,4 +1,4 @@
-import { pokemonFilterVar } from "../cache";
+import { pokemonFilterVar } from '../cache';
 
 interface PokemonFilter {
   type: string;

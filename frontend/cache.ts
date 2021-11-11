@@ -1,6 +1,6 @@
-import { InMemoryCache, makeVar } from "@apollo/client";
-import { offsetLimitPagination } from "@apollo/client/utilities";
-import PokemonFilter from "./types/pokemonFilter";
+import { InMemoryCache, makeVar } from '@apollo/client';
+import { offsetLimitPagination } from '@apollo/client/utilities';
+import PokemonFilter from './types/pokemonFilter';
 
 /**
  * Handles the filter variables.
@@ -9,7 +9,7 @@ import PokemonFilter from "./types/pokemonFilter";
  * Here we set the initial values for the filter.
  */
 export const pokemonFilterVar = makeVar<PokemonFilter>({
-  type: "",
+  type: '',
   sortDescending: false,
 });
 
@@ -24,7 +24,7 @@ export const cache: InMemoryCache = new InMemoryCache({
         },
         // This defines a merge function for paginated results. See https://www.apollographql.com/docs/react/pagination/offset-based/#setting-keyargs-with-offsetlimitpagination
         // Merge depends on offset and limit by default. Parameters are other dependencies.
-        pokemons: offsetLimitPagination(["name", "type", "sortDescending"]),
+        pokemons: offsetLimitPagination(['name', 'type', 'sortDescending']),
       },
     },
   },
