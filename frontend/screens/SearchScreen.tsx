@@ -7,17 +7,16 @@ import {
   ScrollView,
   Button,
   Center,
-} from "native-base";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from "../utils/queries";
-import { RootStackScreenProps } from "../types/navigation";
-import ScreenWrapper from "../components/ScreenWrapper";
-import SearchResults from "../components/SearchResults";
-import SearchFilter from "../components/SearchFilter";
-import { pokemonFilterVar } from "../cache";
+} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
+import { RootStackScreenProps } from '../types/navigation';
+import ScreenWrapper from '../components/ScreenWrapper';
+import SearchResults from '../components/SearchResults';
+import SearchFilter from '../components/SearchFilter';
+import { pokemonFilterVar } from '../cache';
 
 // This value aligns with the hardcoded limit in backend
 const ITEM_FETCH_LIMIT = 10;
@@ -25,10 +24,10 @@ const ITEM_FETCH_LIMIT = 10;
 // This component contains search input and results
 export default function SearchScreen({
   navigation,
-}: RootStackScreenProps<"Root">) {
+}: RootStackScreenProps<'Root'>) {
   // Start first fetchmore with offset, to add to the already fetched items
   const [offset, setOffset] = useState(0);
-  const [searchText, onChangeSearchText] = useState();
+  const [searchText, onChangeSearchText] = useState('');
 
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
@@ -37,14 +36,13 @@ export default function SearchScreen({
         name: searchText,
         sortDescending: pokemonFilterVar().sortDescending,
         type: pokemonFilterVar().type,
-        offset
+        offset,
       },
     }
   );
 
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-
 
   useEffect(() => {
     getQuery({
@@ -73,7 +71,6 @@ export default function SearchScreen({
     }
   };
 
-
   // Reset offset when search text changes
   useEffect(() => {
     setOffset(ITEM_FETCH_LIMIT);
@@ -93,8 +90,8 @@ export default function SearchScreen({
 
   // Sent to card for navigation
   function navigateToCard(pokemonId: string) {
-    navigation.navigate("PokemonCardScreen", {
-      pokemonId: pokemonId,
+    navigation.navigate('PokemonCardScreen', {
+      pokemonId,
     });
   }
 
@@ -118,11 +115,11 @@ export default function SearchScreen({
               aria-label="Search for pokemon"
               icon={<Icon as={MaterialIcons} name="search" />}
               _icon={{
-                color: "red.500",
-                size: "md",
+                color: 'red.500',
+                size: 'md',
               }}
               _hover={{
-                bg: "red.500:alpha.20",
+                bg: 'red.500:alpha.20',
               }}
             />
             <IconButton
@@ -130,11 +127,11 @@ export default function SearchScreen({
               aria-label="Open settings"
               icon={<Icon as={MaterialIcons} name="settings" />}
               _icon={{
-                color: "red.500",
-                size: "md",
+                color: 'red.500',
+                size: 'md',
               }}
               _hover={{
-                bg: "red.500:alpha.20",
+                bg: 'red.500:alpha.20',
               }}
             />
           </HStack>

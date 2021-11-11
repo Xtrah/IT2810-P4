@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -7,11 +7,11 @@ import {
   HStack,
   Select,
   Text,
-} from "native-base";
-import React, { useState, ChangeEvent } from "react";
-import pokemonTypes from "../constants/pokemonTypes";
-import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from "../utils/queries";
-import setPokemonFilter from "../utils/setPokemonFilter";
+} from 'native-base';
+import React, { useState, ChangeEvent } from 'react';
+import pokemonTypes from '../constants/pokemonTypes';
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
+import setPokemonFilter from '../utils/setPokemonFilter';
 
 interface Props {
   show: boolean;
@@ -30,7 +30,7 @@ const SearchFilter = ({ show, onSubmit }: Props) => {
 
   function handleSortChange() {
     // TODO - use JSON-parse to convert string to boolean
-    const sortDescending = pokemonSort === "true"; // Converts string to boolean
+    const sortDescending = pokemonSort === 'true'; // Converts string to boolean
     // Applies the filter to the search query
     setPokemonFilter({
       type: pokemonType,
