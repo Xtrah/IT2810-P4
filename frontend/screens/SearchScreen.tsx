@@ -29,6 +29,11 @@ export default function SearchScreen({
   const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
+  // Toggle SearchFilter to show or hide
+  const [show, setShow] = React.useState(false);
+  const handleToggle = () => setShow(!show);
+
+  // LazyQuery pokemons based on input data
   const { data: filterData } = useQuery(GET_POKEMON_FILTER);
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
@@ -42,9 +47,7 @@ export default function SearchScreen({
     }
   );
 
-  const [show, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!show);
-
+  // Query on first mount
   useEffect(() => {
     getQuery({
       variables: {
@@ -57,6 +60,11 @@ export default function SearchScreen({
     // Disabling to only query first on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Reset offset on filter change
+  useEffect(() => {
+    setOffset(0);
+  }, [filterData.pokemonFilter.type, filterData.pokemonFilter.sortDescending]);
 
   // Query more items and update offset
   const onLoadMore = () => {
@@ -72,9 +80,8 @@ export default function SearchScreen({
     }
   };
 
-  // Query data when submitting
+  // Query data when submitting search
   function onSubmit() {
-    setOffset(0);
     getQuery({
       variables: {
         name: searchText,
@@ -85,7 +92,7 @@ export default function SearchScreen({
     });
   }
 
-  // Sent to card for navigation
+  // Navigate to PokemonCardScreen
   function navigateToCard(pokemonId: string) {
     navigation.navigate('PokemonCardScreen', {
       pokemonId,
@@ -133,7 +140,7 @@ export default function SearchScreen({
             />
           </HStack>
 
-          <SearchFilter show={show} onSubmit={onSubmit} />
+          <SearchFilter show={show} />
 
           <SearchResults
             data={data}

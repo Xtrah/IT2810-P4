@@ -1,35 +1,26 @@
 import { useQuery } from '@apollo/client';
-import {
-  Box,
-  Button,
-  Center,
-  Collapse,
-  HStack,
-  Select,
-  Text,
-} from 'native-base';
-import React, { useState } from 'react';
+import { Box, Center, Collapse, HStack, Select, Text } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import pokemonTypes from '../constants/pokemonTypes';
 import { GET_POKEMON_FILTER } from '../utils/queries';
 import setPokemonFilter from '../utils/setPokemonFilter';
 
 interface Props {
   show: boolean;
-  onSubmit: () => void;
 }
 
-const SearchFilter = ({ show, onSubmit }: Props) => {
+const SearchFilter = ({ show }: Props) => {
   // Get filter to initialize select value
-
   const { data: filterData } = useQuery(GET_POKEMON_FILTER);
 
+  // Set filter values
   const [pokemonSort, setPokemonSort] = useState(
     filterData.pokemonFilter.sortDescending
   );
   const [pokemonType, setPokemonType] = useState(filterData.pokemonFilter.type);
 
-  function handleSortChange() {
-    // TODO - use JSON-parse to convert string to boolean
+  // Update pokemonfilter on filter change
+  useEffect(() => {
     const sortDescending = pokemonSort === 'true'; // Converts string to boolean
     const type = pokemonType;
     // Applies the filter to the search query
@@ -37,8 +28,7 @@ const SearchFilter = ({ show, onSubmit }: Props) => {
       type,
       sortDescending,
     });
-    onSubmit(); // Submits the search
-  }
+  }, [pokemonSort, pokemonType]);
 
   return (
     <Collapse isOpen={show}>
@@ -91,7 +81,6 @@ const SearchFilter = ({ show, onSubmit }: Props) => {
             </Select>
           </Center>
         </HStack>
-        <Button onPress={handleSortChange}>Set filter</Button>
       </Box>
     </Collapse>
   );
