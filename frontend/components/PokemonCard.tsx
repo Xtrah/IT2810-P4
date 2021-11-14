@@ -18,6 +18,8 @@ const PokemonCard = ({ pokemon }: Props) => (
       alignItems="center"
       key={pokemon._id}
       h="100px"
+      borderRadius={5}
+      shadow={4}
     >
       <Text color="white" mr={2} fontSize="16">
         {pokemon.name}

@@ -9,11 +9,14 @@ interface Props {
   show: boolean;
 }
 
+/**
+ * This component renders a collapsible filter
+ */
 const SearchFilter = ({ show }: Props) => {
   // Get filter to initialize select value
   const { data: filterData } = useQuery(GET_POKEMON_FILTER);
 
-  // Set filter values
+  // Initiating value with global state
   const [pokemonSort, setPokemonSort] = useState(
     filterData.pokemonFilter.sortDescending
   );
@@ -23,7 +26,7 @@ const SearchFilter = ({ show }: Props) => {
   useEffect(() => {
     const sortDescending = pokemonSort === 'true'; // Converts string to boolean
     const type = pokemonType;
-    // Applies the filter to the search query
+    // Update filter global state
     setPokemonFilter({
       type,
       sortDescending,
@@ -33,13 +36,14 @@ const SearchFilter = ({ show }: Props) => {
   return (
     <Collapse isOpen={show}>
       <Box
-        p="10px"
+        p={2}
         alignSelf="stretch"
         m={2}
         borderWidth={2}
         borderColor="red.500"
+        backgroundColor="gray.50"
         rounded="md"
-        shadow="md"
+        shadow={4}
       >
         <HStack>
           <Box p={4}>
