@@ -14,13 +14,16 @@ interface Props {
  */
 const SearchFilter = ({ show }: Props) => {
   // Get filter to initialize select value
-  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
+  const {
+    data: { pokemonFilter },
+  } = useQuery(GET_POKEMON_FILTER);
+
+  // Convert boolean to string
+  const pokemonSortString = String(pokemonFilter.sortDescending);
 
   // Initiating value with global state
-  const [pokemonSort, setPokemonSort] = useState(
-    filterData.pokemonFilter.sortDescending
-  );
-  const [pokemonType, setPokemonType] = useState(filterData.pokemonFilter.type);
+  const [pokemonSort, setPokemonSort] = useState(pokemonSortString);
+  const [pokemonType, setPokemonType] = useState(pokemonFilter.type);
 
   // Update pokemonfilter on filter change
   useEffect(() => {
@@ -54,7 +57,7 @@ const SearchFilter = ({ show }: Props) => {
 
           <Center>
             <Select
-              defaultValue=""
+              selectedValue={pokemonType}
               placeholder="Choose type"
               onValueChange={(filterType) => setPokemonType(filterType)}
             >
@@ -77,7 +80,7 @@ const SearchFilter = ({ show }: Props) => {
           <Center>
             <Select
               placeholder="Sort by"
-              defaultValue="false"
+              selectedValue={pokemonSort}
               onValueChange={(sortDescending) => setPokemonSort(sortDescending)}
             >
               <Select.Item label="Ascending" value="false" />
