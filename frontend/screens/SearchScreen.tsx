@@ -29,19 +29,21 @@ export default function SearchScreen({
   const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
-  // Toggle SearchFilter to show or hide
-  const [show, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!show);
+  // This handles the toggle of SearchFilter
+  const [show, toggleShow] = useState(false);
+  const handleToggle = () => toggleShow(!show);
 
-  // LazyQuery pokemons based on input data
-  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
+  // This fetches the filter global state
+  const {
+    data: { pokemonFilter },
+  } = useQuery(GET_POKEMON_FILTER);
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
     {
       variables: {
         name: searchText,
-        sortDescending: filterData.pokemonFilter.sortDescending,
-        type: filterData.pokemonFilter.type,
+        sortDescending: pokemonFilter.sortDescending,
+        type: pokemonFilter.type,
         offset,
       },
     }
@@ -64,7 +66,7 @@ export default function SearchScreen({
   // Reset offset on filter change
   useEffect(() => {
     setOffset(0);
-  }, [filterData.pokemonFilter.type, filterData.pokemonFilter.sortDescending]);
+  }, [pokemonFilter.type, pokemonFilter.sortDescending]);
 
   // Query more items and update offset
   const onLoadMore = () => {
@@ -148,19 +150,20 @@ export default function SearchScreen({
             loading={loading}
             error={error}
           />
-
-          <Center height="100px">
-            <Button
-              disabled={loading}
-              bgColor="red.500"
-              color="white"
-              h="1.75rem"
-              size="md"
-              onPress={onLoadMore}
-            >
-              Load more
-            </Button>
-          </Center>
+          {data?.pokemons && (
+            <Center height="100px">
+              <Button
+                disabled={loading}
+                bgColor="red.500"
+                color="white"
+                h="1.75rem"
+                size="md"
+                onPress={onLoadMore}
+              >
+                Load more
+              </Button>
+            </Center>
+          )}
         </Flex>
       </ScrollView>
     </ScreenWrapper>
