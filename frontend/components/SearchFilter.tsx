@@ -18,11 +18,10 @@ const SearchFilter = ({ show }: Props) => {
     data: { pokemonFilter },
   } = useQuery(GET_POKEMON_FILTER);
 
-  // Convert boolean to string
-  const pokemonSortString = String(pokemonFilter.sortDescending);
-
   // Initiating value with global state
-  const [pokemonSort, setPokemonSort] = useState(pokemonSortString);
+  const [pokemonSort, setPokemonSort] = useState(
+    String(pokemonFilter.sortDescending)
+  ); // Convert boolean to string
   const [pokemonType, setPokemonType] = useState(pokemonFilter.type);
 
   // Update pokemonfilter on filter change
