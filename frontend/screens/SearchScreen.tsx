@@ -10,11 +10,13 @@ import {
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useLazyQuery } from '@apollo/client';
-import { GET_POKEMONS_LIMITED } from '../utils/queries';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
 import SearchResults from '../components/SearchResults';
+import SearchFilter from '../components/SearchFilter';
+import { pokemonFilterVar } from '../cache';
 
 // This value aligns with the hardcoded limit in backend
 const ITEM_FETCH_LIMIT = 10;
@@ -27,20 +29,33 @@ export default function SearchScreen({
   const [offset, setOffset] = useState(0);
   const [searchText, onChangeSearchText] = useState('');
 
+  // This handles the toggle of SearchFilter
+  const [show, toggleShow] = useState(false);
+  const handleToggle = () => toggleShow(!show);
+
+  // This fetches the filter global state
+  const {
+    data: { pokemonFilter },
+  } = useQuery(GET_POKEMON_FILTER);
   const [getQuery, { data, loading, error, fetchMore }] = useLazyQuery(
     GET_POKEMONS_LIMITED,
     {
       variables: {
         name: searchText,
+        sortDescending: pokemonFilter.sortDescending,
+        type: pokemonFilter.type,
         offset,
       },
     }
   );
 
+  // Query on first mount
   useEffect(() => {
     getQuery({
       variables: {
         name: searchText,
+        sortDescending: pokemonFilterVar().sortDescending,
+        type: pokemonFilterVar().type,
         offset,
       },
     });
@@ -48,33 +63,38 @@ export default function SearchScreen({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Reset offset on filter change
+  useEffect(() => {
+    setOffset(0);
+  }, [pokemonFilter.type, pokemonFilter.sortDescending]);
+
   // Query more items and update offset
   const onLoadMore = () => {
     if (fetchMore) {
       fetchMore({
         variables: {
           name: searchText,
+          sortDescending: pokemonFilterVar().sortDescending,
+          type: pokemonFilterVar().type,
           offset: offset + ITEM_FETCH_LIMIT,
         },
       }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
     }
   };
 
-  // Query data when submitting
+  // Query data when submitting search
   function onSubmit() {
     getQuery({
       variables: {
         name: searchText,
+        sortDescending: pokemonFilterVar().sortDescending,
+        type: pokemonFilterVar().type,
         offset,
       },
     });
   }
 
-  function onToggle() {
-    // TODO: Handle toggling filter
-  }
-
-  // Sent to card for navigation
+  // Navigate to PokemonCardScreen
   function navigateToCard(pokemonId: string) {
     navigation.navigate('PokemonCardScreen', {
       pokemonId,
@@ -109,7 +129,7 @@ export default function SearchScreen({
               }}
             />
             <IconButton
-              onPress={onToggle}
+              onPress={handleToggle}
               aria-label="Open settings"
               icon={<Icon as={MaterialIcons} name="settings" />}
               _icon={{
@@ -122,13 +142,14 @@ export default function SearchScreen({
             />
           </HStack>
 
+          <SearchFilter show={show} />
+
           <SearchResults
             data={data}
             navigateToCard={navigateToCard}
             loading={loading}
             error={error}
           />
-
           {data?.pokemons && (
             <Center height="100px">
               <Button

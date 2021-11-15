@@ -1,10 +1,9 @@
 import React from 'react';
-
+import { Alert, FlatList, Icon, Pressable, Spinner } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
 import { ApolloError } from '@apollo/client';
 import { PokemonLimited } from '../types/pokemon';
 import PokemonCard from './PokemonCard';
-import { Alert, FlatList, Icon, Pressable, Spinner } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
 
 interface Props {
   data: { pokemons: PokemonLimited[] };
