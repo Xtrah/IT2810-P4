@@ -103,69 +103,67 @@ export default function SearchScreen({
 
   return (
     <ScreenWrapper>
-      <ScrollView>
-        <Flex alignItems="center">
-          <HStack space={2}>
-            <Input
-              accessibilityLabel="Search for pokemon"
-              fontSize="16"
-              autoFocus
-              width="100%"
-              value={searchText}
-              type="text"
-              placeholder="Enter pokemon name"
-              onChangeText={onChangeSearchText}
-            />
-            <IconButton
-              onPress={onSubmit}
-              aria-label="Search for pokemon"
-              icon={<Icon as={MaterialIcons} name="search" />}
-              _icon={{
-                color: 'red.500',
-                size: 'md',
-              }}
-              _hover={{
-                bg: 'red.500:alpha.20',
-              }}
-            />
-            <IconButton
-              onPress={handleToggle}
-              aria-label="Open settings"
-              icon={<Icon as={MaterialIcons} name="settings" />}
-              _icon={{
-                color: 'red.500',
-                size: 'md',
-              }}
-              _hover={{
-                bg: 'red.500:alpha.20',
-              }}
-            />
-          </HStack>
-
-          <SearchFilter show={show} />
-
-          <SearchResults
-            data={data}
-            navigateToCard={navigateToCard}
-            loading={loading}
-            error={error}
+      <Flex alignItems="center">
+        <HStack space={2}>
+          <Input
+            accessibilityLabel="Search for pokemon"
+            fontSize="16"
+            autoFocus
+            width="100%"
+            value={searchText}
+            type="text"
+            placeholder="Enter pokemon name"
+            onChangeText={onChangeSearchText}
           />
-          {data?.pokemons && (
-            <Center height="100px">
-              <Button
-                disabled={loading}
-                bgColor="red.500"
-                color="white"
-                h="1.75rem"
-                size="md"
-                onPress={onLoadMore}
-              >
-                Load more
-              </Button>
-            </Center>
-          )}
-        </Flex>
-      </ScrollView>
+          <IconButton
+            onPress={onSubmit}
+            aria-label="Search for pokemon"
+            icon={<Icon as={MaterialIcons} name="search" />}
+            _icon={{
+              color: 'red.500',
+              size: 'md',
+            }}
+            _hover={{
+              bg: 'red.500:alpha.20',
+            }}
+          />
+          <IconButton
+            onPress={handleToggle}
+            aria-label="Open settings"
+            icon={<Icon as={MaterialIcons} name="settings" />}
+            _icon={{
+              color: 'red.500',
+              size: 'md',
+            }}
+            _hover={{
+              bg: 'red.500:alpha.20',
+            }}
+          />
+        </HStack>
+
+        <SearchFilter show={show} />
+
+        <SearchResults
+          data={data}
+          navigateToCard={navigateToCard}
+          loading={loading}
+          error={error}
+        />
+        {data?.pokemons && (
+          <Center height="100px">
+            <Button
+              disabled={loading}
+              bgColor="red.500"
+              color="white"
+              h="1.75rem"
+              size="md"
+              onPress={onLoadMore}
+            >
+              Load more
+            </Button>
+          </Center>
+        )}
+      </Flex>
     </ScreenWrapper>
   );
 }
