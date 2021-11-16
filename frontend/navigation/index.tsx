@@ -23,6 +23,20 @@ const pokemonball = require('../assets/images/pokemonball.png');
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+function LogoTitle() {
+  return (
+    <Image
+      /*  ml={2}
+      borderRadius="xl"
+      boxSize="30px" */
+      style={{ width: 50, height: 50 }}
+      src={pokemonball}
+      alt="pokeball home button"
+      // resizeMode="cover"
+    />
+  );
+}
+
 function RootNavigator() {
   return (
     <Stack.Navigator
@@ -34,14 +48,7 @@ function RootNavigator() {
             accessibilityLabel="Navigate to home page"
             onPress={() => navigation.navigate('Root')}
           >
-            <Image
-              ml={2}
-              borderRadius="xl"
-              boxSize="30px"
-              resizeMode="cover"
-              src={pokemonball}
-              alt="pokeball home button"
-            />
+            <LogoTitle />
           </Pressable>
         ),
         headerRight: () => (
@@ -51,7 +58,7 @@ function RootNavigator() {
             icon={<Icon as={MaterialIcons} name="add-box" />}
             _icon={{
               color: 'red.500',
-              size: 'xl',
+              size: 'lg',
             }}
             _hover={{
               bg: 'red.500:alpha.20',
@@ -69,7 +76,9 @@ function RootNavigator() {
       <Stack.Screen
         name="CreatePokemonScreen"
         component={CreatePokemonScreen}
-        options={{ title: 'Create Pokemon' }}
+        options={{
+          title: 'Create Pokemon',
+        }}
       />
       <Stack.Screen
         name="PokemonCardScreen"

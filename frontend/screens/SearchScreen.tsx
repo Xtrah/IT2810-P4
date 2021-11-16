@@ -103,13 +103,13 @@ export default function SearchScreen({
 
   return (
     <ScreenWrapper>
-      <Flex alignItems="center">
-        <HStack space={2}>
+      <Flex justify-content="center">
+        <HStack space={2} m={3}>
           <Input
             accessibilityLabel="Search for pokemon"
             fontSize="16"
+            flexGrow={3}
             autoFocus
-            width="100%"
             value={searchText}
             type="text"
             placeholder="Enter pokemon name"
@@ -140,9 +140,7 @@ export default function SearchScreen({
             }}
           />
         </HStack>
-
         <SearchFilter show={show} />
-
         <SearchResults
           data={data}
           navigateToCard={navigateToCard}
