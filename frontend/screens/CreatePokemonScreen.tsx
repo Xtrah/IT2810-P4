@@ -14,12 +14,13 @@ import {
   Center,
   ScrollView,
 } from "native-base";
-import pokemonTypes from '../constants/pokemonTypes';
 import { useMutation } from '@apollo/client';
-import { CREATE_POKEMON } from '../utils/queries';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-const notFoundImage = require('../assets/images/ImageNotFound.svg');
+import pokemonTypes from '../constants/pokemonTypes';
+import { CREATE_POKEMON } from '../utils/queries';
+import { RootStackScreenProps } from '../types/navigation';
 
+const notFoundImage = require('../assets/images/ImageNotFound.svg');
 
 type Inputs = {
   name: string;
@@ -41,12 +42,13 @@ const determineChosenTypes = (primaryType: string, secondaryType: string) => {
 };
 
 // CreatePokemon is the page component for creating new pokemons
-function CreatePokemonScreen() {
+function CreatePokemonScreen({
+  navigation,
+}: RootStackScreenProps<'Root'>) {
   const [createPokemon, { error, loading }] = useMutation(CREATE_POKEMON);
 
   // Form-inputs that require controlling outside of useForm()-hook
   const [imageUrl, setImageUrl] = useState('');
-  const [prevImageUrl, setPrevImageUrl] = useState('');
   const [secondaryType, setSecondaryType] = useState<string>('');
 
   // const history = useHistory();
@@ -66,8 +68,7 @@ function CreatePokemonScreen() {
       },
     })
       .then((res) =>
-        // history.push(`/project3/pokemon/${res.data.createPokemon._id}`)
-        console.log("Redirect!")
+        navigation.navigate('PokemonCardScreen', {pokemonId: res.data.createPokemon._id})
       )
       // eslint-disable-next-line no-console
       .catch((err) => console.error('Create pokemon-request failed', err));
@@ -77,28 +78,27 @@ function CreatePokemonScreen() {
     <ScrollView>
       <Center flex={1}>
         <form>
-          <FormControl isInvalid={!!errors.name}>
+          <FormControl isRequired isInvalid={!!errors.name}>
             <FormControl.Label>Name</FormControl.Label>
             <Controller
               control={control}
               name="name"
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <Input
-                  aria-required
                   accessibilityLabel="Name"
                   type="text"
                   placeholder="Enter pokemon name"
                   borderColor="red.500"
-                  onChange={(value) => onChange(value)}
+                  onChange={(inputValue) => onChange(inputValue)}
                 />
               )}
               rules={{
                 required: {
                   value: true,
-                  message: "Field is required!",
+                  message: 'Field is required!',
                 },
                 validate: (value) =>
-                  value.length > 3 || "Name must be more than 3 characters",
+                  value.length > 3 || 'Name must be more than 3 characters',
               }}
             />
             <FormControl.ErrorMessage>
@@ -106,57 +106,55 @@ function CreatePokemonScreen() {
             </FormControl.ErrorMessage>
           </FormControl>
           <Flex mt="10px">
-            <FormControl isInvalid={!!errors.height}>
+            <FormControl isRequired isInvalid={!!errors.height}>
               <FormControl.Label>Height (inches)</FormControl.Label>
               <Controller
                 control={control}
                 name="height"
                 render={({ field: { onChange } }) => (
                   <Input
-                    aria-required
                     placeholder="123"
                     accessibilityLabel="Height"
                     type="number"
                     mr="5px"
                     borderColor="red.500"
-                    onChange={(value) => onChange(value)}
-                  />
-                )}
-                rules={{
-                  required: {
+                    onChangeText={(e) => onChange(parseInt(e, 10))}
+                    />
+                    )}
+                    rules={{
+                      required: {
                     value: true,
-                    message: "Field is required!",
+                    message: 'Field is required!',
                   },
                   validate: (value) =>
-                    value > 0 || "Height must be more than 0",
+                  value > 0 || 'Height must be more than 0',
                 }}
               />
               <FormControl.ErrorMessage>
                 {errors.height && errors.height.message}
               </FormControl.ErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!!errors.weight}>
+            <FormControl isRequired isInvalid={!!errors.weight}>
               <FormControl.Label>Weight (lbs)</FormControl.Label>
               <Controller
                 control={control}
                 name="weight"
                 render={({ field: { onChange } }) => (
                   <Input
-                    aria-required
                     accessibilityLabel="Weight"
                     type="number"
                     placeholder="123"
                     borderColor="red.500"
-                    onChange={(value) => onChange(value)}
+                    onChangeText={(e) => onChange(parseInt(e, 10))}
                   />
-                )}
+                  )}
                 rules={{
                   required: {
                     value: true,
-                    message: "Field is required!",
+                    message: 'Field is required!',
                   },
                   validate: (value) =>
-                    value > 0 || "Weight must be more than 0",
+                    value > 0 || 'Weight must be more than 0',
                 }}
               />
               <FormControl.ErrorMessage>
@@ -164,19 +162,19 @@ function CreatePokemonScreen() {
               </FormControl.ErrorMessage>
             </FormControl>
           </Flex>
-          <FormControl mt="10px" isInvalid={!!errors.primaryType}>
+          <FormControl mt="10px" isRequired isInvalid={!!errors.primaryType}>
             <FormControl.Label>Primary type</FormControl.Label>
             <Controller
               control={control}
               name="primaryType"
+              defaultValue="normal"
               render={({ field: { onChange, value } }) => (
                 <Select
-                  aria-required
                   accessibilityLabel="Primary type"
                   placeholder="Select primary type"
                   borderColor="red.500"
-                  selectedValue={value || "normal"}
-                  onValueChange={(value: string) => onChange(value)}
+                  selectedValue={value}
+                  onValueChange={(inputValue: string) => onChange(inputValue)}
                 >
                   {pokemonTypes.map((type: string) => (
                     <Select.Item key={type} label={type} value={type} />
@@ -186,7 +184,7 @@ function CreatePokemonScreen() {
               rules={{
                 required: {
                   value: true,
-                  message: "Field is required!",
+                  message: 'Field is required!',
                 },
               }}
             />
@@ -210,7 +208,7 @@ function CreatePokemonScreen() {
               {errors.secondaryType && errors.secondaryType.message}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl mt="10px" isInvalid={!!errors.description}>
+          <FormControl mt="10px" isRequired isInvalid={!!errors.description}>
             <FormControl.Label>Description</FormControl.Label>
             <Controller
               control={control}
@@ -221,13 +219,13 @@ function CreatePokemonScreen() {
                   placeholder="Description of pokemon"
                   borderColor="red.500"
                   value={value}
-                  onChangeText={(value) => onChange(value)}
+                  onChangeText={(inputValue) => onChange(inputValue)}
                 />
               )}
               rules={{
                 required: {
                   value: true,
-                  message: "Field is required!",
+                  message: 'Field is required!',
                 },
               }}
             />
@@ -235,32 +233,31 @@ function CreatePokemonScreen() {
               {errors.description && errors.description.message}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl mt="10px" isInvalid={!!errors.imageUrl}>
+          <FormControl mt="10px" isRequired isInvalid={!!errors.imageUrl}>
             <FormControl.Label>Image Url</FormControl.Label>
             <Controller
               control={control}
               name="imageUrl"
               render={({ field: { onChange, value } }) => (
                 <Input
-                  aria-required
                   accessibilityLabel="Image url"
                   type="text"
                   placeholder="Enter url for image of pokemon"
                   borderColor="red.500"
-                  value={value || ""}
-                  onChangeText={(value) => {
-                    onChange(value);
-                    setPrevImageUrl(imageUrl)
-                    setImageUrl(value);
+                  value={value}
+                  onChangeText={(inputValue) => {
+                    onChange(inputValue);
+                    setImageUrl(inputValue);
                   }}
                 />
               )}
               rules={{
                 required: {
                   value: true,
-                  message: "Field is required!",
+                  message: 'Field is required!',
                 },
               }}
+              defaultValue=""
             />
             <FormControl.ErrorMessage>
               {errors.imageUrl && errors.imageUrl.message}
@@ -292,12 +289,12 @@ function CreatePokemonScreen() {
             isLoading={isSubmitting}
             disabled={loading}
             onPress={handleSubmit(onSubmit)}
-            leftIcon={loading? <CheckIcon/> : <AddIcon/>}
+            leftIcon={loading ? <CheckIcon /> : <AddIcon />}
           >
             {loading ? (
-                <Text>Submitting ...</Text>
+              <Text>Submitting ...</Text>
             ) : (
-                <Text>Create Pokemon</Text>
+              <Text>Create Pokemon</Text>
             )}
           </Button>
         </form>
