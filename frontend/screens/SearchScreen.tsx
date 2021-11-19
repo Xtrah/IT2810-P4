@@ -1,22 +1,14 @@
-import {
-  Flex,
-  HStack,
-  Input,
-  IconButton,
-  Icon,
-  ScrollView,
-  Button,
-  Center,
-} from 'native-base';
 import React, { useEffect, useState } from 'react';
+import {Flex, HStack, Icon, IconButton, Input} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
+
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
-import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
 import SearchResults from '../components/SearchResults';
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import SearchFilter from '../components/SearchFilter';
 import { pokemonFilterVar } from '../cache';
+import { RootStackScreenProps } from '../types/navigation';
 
 // This value aligns with the hardcoded limit in backend
 const ITEM_FETCH_LIMIT = 10;
@@ -103,14 +95,14 @@ export default function SearchScreen({
 
   return (
     <ScreenWrapper>
-      <ScrollView>
-        <Flex alignItems="center">
+      <>
+      <Flex alignItems="center">
           <HStack space={2}>
             <Input
               accessibilityLabel="Search for pokemon"
               fontSize="16"
               autoFocus
-              width="100%"
+              flexGrow={1}
               value={searchText}
               type="text"
               placeholder="Enter pokemon name"
@@ -143,29 +135,17 @@ export default function SearchScreen({
           </HStack>
 
           <SearchFilter show={show} />
+          </Flex>
 
-          <SearchResults
-            data={data}
-            navigateToCard={navigateToCard}
-            loading={loading}
-            error={error}
-          />
-          {data?.pokemons && (
-            <Center height="100px">
-              <Button
-                disabled={loading}
-                bgColor="red.500"
-                color="white"
-                h="1.75rem"
-                size="md"
-                onPress={onLoadMore}
-              >
-                Load more
-              </Button>
-            </Center>
-          )}
-        </Flex>
-      </ScrollView>
+            <SearchResults
+              data={data}
+              navigateToCard={navigateToCard}
+              loading={loading}
+              error={error}
+              loadMore={onLoadMore}
+              />
+              
+      </>
     </ScreenWrapper>
   );
 }
