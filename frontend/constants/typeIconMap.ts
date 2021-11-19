@@ -20,30 +20,25 @@ const psychic = require('../assets/images/pokemonTypes/psychic.png');
 const rock = require('../assets/images/pokemonTypes/rock.png');
 const steel = require('../assets/images/pokemonTypes/steel.png');
 
-// Return image according to string input
-const getIconByType = (type: string) => {
-  const imageTypeMap = new Map([
-    ['normal', normal],
-    ['fire', fire],
-    ['water', water],
-    ['grass', grass],
-    ['electric', electric],
-    ['ice', ice],
-    ['fighting', fighting],
-    ['poison', poison],
-    ['ground', ground],
-    ['flying', flying],
-    ['psychic', psychic],
-    ['bug', bug],
-    ['rock', rock],
-    ['ghost', ghost],
-    ['dark', dark],
-    ['dragon', dragon],
-    ['steel', steel],
-    ['fairy', fairy],
-  ]);
+const iconTypeMap = new Map([
+  ['normal', normal],
+  ['fire', fire],
+  ['water', water],
+  ['grass', grass],
+  ['electric', electric],
+  ['ice', ice],
+  ['fighting', fighting],
+  ['poison', poison],
+  ['ground', ground],
+  ['flying', flying],
+  ['psychic', psychic],
+  ['bug', bug],
+  ['rock', rock],
+  ['ghost', ghost],
+  ['dark', dark],
+  ['dragon', dragon],
+  ['steel', steel],
+  ['fairy', fairy],
+]);
 
-  return imageTypeMap.get(type) || imageTypeMap.get('normal');
-};
-
-export default getIconByType;
+export default iconTypeMap;
