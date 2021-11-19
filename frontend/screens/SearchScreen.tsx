@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Flex, HStack, Icon, IconButton, Input} from 'native-base';
+import { Flex, HStack, Icon, IconButton, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { useLazyQuery, useQuery } from '@apollo/client';
@@ -96,7 +96,7 @@ export default function SearchScreen({
   return (
     <ScreenWrapper>
       <>
-      <Flex alignItems="center">
+        <Flex alignItems="center">
           <HStack space={2}>
             <Input
               accessibilityLabel="Search for pokemon"
@@ -135,16 +135,15 @@ export default function SearchScreen({
           </HStack>
 
           <SearchFilter show={show} />
-          </Flex>
+        </Flex>
 
-            <SearchResults
-              data={data}
-              navigateToCard={navigateToCard}
-              loading={loading}
-              error={error}
-              loadMore={onLoadMore}
-              />
-              
+        <SearchResults
+          data={data}
+          navigateToCard={navigateToCard}
+          loading={loading}
+          error={error}
+          loadMore={onLoadMore}
+        />
       </>
     </ScreenWrapper>
   );

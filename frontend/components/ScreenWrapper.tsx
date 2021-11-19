@@ -9,5 +9,9 @@ interface Props {
 Used to create a consistent margin between screens. Different styling than navigation. 
 */
 export default function ScreenWrapper({ children }: Props) {
-  return <View flex={1} m={4}>{children}</View>;
+  return (
+    <View flex={1} m={4}>
+      {children}
+    </View>
+  );
 }

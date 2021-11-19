@@ -38,7 +38,7 @@ const PokemonCard = ({ pokemon }: Props) => (
         borderRadius="xl"
         boxSize="70px"
         resizeMode="cover"
-        source={{ uri: pokemon.imageUrl}}
+        source={{ uri: pokemon.imageUrl }}
         // Fallback to Bulbasaur if image doesn't load
         fallbackSource={{
           uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',

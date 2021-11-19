@@ -20,7 +20,7 @@ export default function SearchResults({
   loading,
   data,
   navigateToCard,
-  loadMore
+  loadMore,
 }: Props) {
   if (error) {
     return (
