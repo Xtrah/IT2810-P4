@@ -36,7 +36,7 @@ const determineChosenTypes = (primaryType: string, secondaryType: string) => {
   return [primaryType, secondaryType];
 };
 
-// CreatePokemon is the page component for creating new pokemons
+// CreatePokemon is the screen for creating new pokemons
 function CreatePokemonScreen({
   navigation,
 }: RootStackScreenProps<'CreatePokemonScreen'>) {

@@ -9,9 +9,7 @@ interface Props {
   show: boolean;
 }
 
-/**
- * This component renders a collapsible filter
- */
+// This component renders a collapsible filter
 const SearchFilter = ({ show }: Props) => {
   // Get filter to initialize select value
   const {

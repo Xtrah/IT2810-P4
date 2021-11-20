@@ -7,6 +7,7 @@ interface Props {
   colors: string[];
 }
 
+// Creates linear gradient-wrapper based on passed colors
 function Gradient({ children, colors }: Props) {
   return (
     <LinearGradient colors={colors} style={styles.linearGradient}>

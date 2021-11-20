@@ -1,3 +1,4 @@
+// All types of pokemon
 const pokemonTypes = [
   'normal',
   'fire',

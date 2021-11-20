@@ -20,7 +20,7 @@ import getGradientByType from '../utils/getGradientByType';
 import iconTypeMap from '../constants/typeIconMap';
 import Gradient from '../components/Gradient';
 
-// This renders the detail screen of pokemons
+// Renders the detail-screen of pokemons
 function PokemonCardScreen({
   route,
 }: RootStackScreenProps<'PokemonCardScreen'>) {

@@ -14,7 +14,7 @@ interface Props {
   loadMore: () => void;
 }
 
-// This presents the search results
+// This component presents the search results with a "load more"-button
 export default function SearchResults({
   error,
   loading,

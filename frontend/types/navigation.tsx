@@ -5,12 +5,6 @@
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
-}
-
 // Undefined means the component does not use any params.
 export type RootStackParamList = {
   Root: undefined;

@@ -20,6 +20,7 @@ const psychic = require('../assets/images/pokemonTypes/psychic.png');
 const rock = require('../assets/images/pokemonTypes/rock.png');
 const steel = require('../assets/images/pokemonTypes/steel.png');
 
+// Maps each pokemon-type to their corresponding icon
 const iconTypeMap = new Map([
   ['normal', normal],
   ['fire', fire],
