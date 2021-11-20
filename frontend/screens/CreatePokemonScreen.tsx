@@ -37,7 +37,7 @@ const determineChosenTypes = (primaryType: string, secondaryType: string) => {
 };
 
 // CreatePokemon is the page component for creating new pokemons
-function CreatePokemonScreen({ navigation }: RootStackScreenProps<'Root'>) {
+function CreatePokemonScreen({ navigation }: RootStackScreenProps<'CreatePokemonScreen'>) {
   const [createPokemon, { error, loading }] = useMutation(CREATE_POKEMON);
 
   // Form-inputs that require controlling outside of useForm()-hook
@@ -54,9 +54,6 @@ function CreatePokemonScreen({ navigation }: RootStackScreenProps<'Root'>) {
 
   // Handle submission of data
   const onSubmit: SubmitHandler<Inputs> = (submitData) => {
-    console.log(submitData);
-    console.log(primaryType);
-    console.log(secondaryType);
     createPokemon({
       variables: {
         name: submitData.pokemonName,
