@@ -2,15 +2,32 @@
 
 This repository is our Pokedex React web app from [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3), developed as a React Native app. React Native allows us to use React to create native iOS & Android applications, using a single codebase that can build to both platforms. As React Native app and a React web app are similar, this documentation includes a lot of repetition from the last project, but we will highlight the differences. We found this suitable, as the documentation will be more readily available for people new to the project. For original documentation, see [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3).
 
-## Development
+## Running the application
 
-### 🏙 Frontend
+### 📱 Run the application on a mobile device
+
+1. Download AnyConnect on your mobile device and connect to NTNU VPN:
+    - [iPhone and iPad](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Iphone+og+Ipad)
+    - [Android](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Android)
+2. Download Expo Go for your device:
+    - [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US)
+    - [App Store](https://apps.apple.com/us/app/expo-go/id982107779)
+3. Connect to Expo:
+    - One alternative is to connect to our hosted Expo dev-server following [this link](https://expo.dev/@xtrah/it2810-h21-team-15-project4)
+    - Another alternative is to run the Expo CLI as explained in the next section about hosting the frontend. **NB!**: Remember to have your computer connected to VPN
+        - Turn on "Production Mode"
+        - Choose a connection-mode (Tunnel, LAN or Local)
+4. Scan the QR-code with your mobile device
+5. Use the app!
+
+### 🏙 Hosting the frontend
 
 <!-- https://docs.expo.dev/workflow/expo-cli/ -->
 
 - `npm install -g expo-cli && npm install` to install Expo CLI and required dependencies
-- `npm run web` to run app using Expo CLI in web browser
-- `npm run test` to run tests
+- `npm start` to run app using Expo CLI in web browser
+- Navigate to `http://localhost:19002/`
+- Connect to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn) on your computer to use the server we are hosting.
 
 #### Frontend file structure
 
@@ -40,7 +57,7 @@ Our goal was a file structure which supports maintainability and where you can f
 
 ### 🌆 Backend
 
-The backend is the same as [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3). For easier development it's also added to this repository.
+The backend is the same as [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3). It is currently running on a server and connected to the current frontend. If you wish to run it locally it's also added to this repository. Notice that you have to change the uri in `App.tsx` to reference to your localhost.
 
 - `cd backend`
 - `npm install` to install dependencies
