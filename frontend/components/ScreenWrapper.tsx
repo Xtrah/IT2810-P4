@@ -5,8 +5,7 @@ interface Props {
   children: React.ReactElement;
 }
 
-
-// Used to create a consistent margin between screens. Different styling than navigation. 
+// Used to create a consistent margin between screens. Different styling than navigation.
 export default function ScreenWrapper({ children }: Props) {
   return (
     <View flex={1} m={4}>

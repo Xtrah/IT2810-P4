@@ -18,15 +18,14 @@ export default function App() {
 
   if (!isLoadingComplete) {
     return null;
-  } 
-    return (
-      <SafeAreaProvider>
-        <ApolloProvider client={client}>
-          <NativeBaseProvider>
-            <Navigation />
-          </NativeBaseProvider>
-        </ApolloProvider>
-      </SafeAreaProvider>
-    );
-  
+  }
+  return (
+    <SafeAreaProvider>
+      <ApolloProvider client={client}>
+        <NativeBaseProvider>
+          <Navigation />
+        </NativeBaseProvider>
+      </ApolloProvider>
+    </SafeAreaProvider>
+  );
 }
