@@ -47,8 +47,8 @@ const SearchFilter = ({ show }: Props) => {
         rounded="md"
         shadow={4}
       >
-        <HStack w="100%" justifyContent="center" alignItems="center">
-          <Text fontWeight="500" fontSize="md" mr={2}>
+        <HStack p={2} w="100%" justifyContent="center" alignItems="center">
+          <Text w="85px" fontWeight="500" fontSize="md" mr={2}>
             Filter types
           </Text>
           <Select
@@ -65,8 +65,8 @@ const SearchFilter = ({ show }: Props) => {
             ))}
           </Select>
         </HStack>
-        <HStack w="100%" justifyContent="center" alignItems="center">
-          <Text fontWeight="500" fontSize="md" mr={2}>
+        <HStack p={2} w="100%" justifyContent="center" alignItems="center">
+          <Text w="85px" fontWeight="500" fontSize="md" mr={2}>
             Sort names
           </Text>
           <Select

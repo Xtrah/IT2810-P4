@@ -38,6 +38,7 @@ export default function SearchScreen({
         type: pokemonFilter.type,
         offset,
       },
+      notifyOnNetworkStatusChange: true,
     }
   );
 
@@ -96,7 +97,7 @@ export default function SearchScreen({
   return (
     <ScreenWrapper>
       <>
-        <Flex alignItems="center">
+        <Flex m={3} alignItems="center">
           <HStack space={2}>
             <Input
               accessibilityLabel="Search for pokemon"
@@ -110,7 +111,7 @@ export default function SearchScreen({
             />
             <IconButton
               onPress={onSubmit}
-              aria-label="Search for pokemon"
+              accessibilityLabel="Search for pokemon"
               icon={<Icon as={MaterialIcons} name="search" />}
               _icon={{
                 color: 'red.500',
@@ -122,7 +123,7 @@ export default function SearchScreen({
             />
             <IconButton
               onPress={handleToggle}
-              aria-label="Open settings"
+              accessibilityLabel="Open settings"
               icon={<Icon as={MaterialIcons} name="settings" />}
               _icon={{
                 color: 'red.500',

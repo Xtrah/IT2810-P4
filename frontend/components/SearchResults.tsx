@@ -31,9 +31,10 @@ export default function SearchResults({
     );
   }
 
-  if (loading) {
+  if (!data && loading) {
     return <Spinner color="red.500" accessibilityLabel="Loading data" />;
   }
+  
   return (
     <FlatList
       alignSelf="stretch"
@@ -51,6 +52,7 @@ export default function SearchResults({
             m="20px"
             size="md"
             onPress={loadMore}
+            _pressed={{ bg: 'red.700' }}
           >
             Load more
           </Button>
