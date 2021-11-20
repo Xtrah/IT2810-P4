@@ -37,7 +37,9 @@ const determineChosenTypes = (primaryType: string, secondaryType: string) => {
 };
 
 // CreatePokemon is the page component for creating new pokemons
-function CreatePokemonScreen({ navigation }: RootStackScreenProps<'CreatePokemonScreen'>) {
+function CreatePokemonScreen({
+  navigation,
+}: RootStackScreenProps<'CreatePokemonScreen'>) {
   const [createPokemon, { error, loading }] = useMutation(CREATE_POKEMON);
 
   // Form-inputs that require controlling outside of useForm()-hook
@@ -251,7 +253,6 @@ function CreatePokemonScreen({ navigation }: RootStackScreenProps<'CreatePokemon
           key={imageUrl}
           boxSize="250px"
           resizeMode="contain"
-          // eslint-disable-next-line global-require
           source={
             imageUrl
               ? { uri: imageUrl }
@@ -275,6 +276,7 @@ function CreatePokemonScreen({ navigation }: RootStackScreenProps<'CreatePokemon
           size="lg"
           w="100%"
           mb={10}
+          _pressed={{ bg: 'red.700' }}
           isLoading={loading}
           disabled={loading}
           onPress={handleSubmit(onSubmit)}

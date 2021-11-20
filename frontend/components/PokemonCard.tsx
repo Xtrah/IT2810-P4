@@ -21,7 +21,7 @@ const PokemonCard = ({ pokemon }: Props) => (
       borderRadius={5}
       shadow={4}
     >
-      <Text color="white" mr={2} fontSize="16">
+      <Text color="white" mr={2} fontSize="16" isTruncated maxWidth="50%">
         {pokemon.name}
       </Text>
       {pokemon.types.map((type) => (
@@ -30,6 +30,7 @@ const PokemonCard = ({ pokemon }: Props) => (
           alt={type}
           width="5"
           height="5"
+          mr={1}
           source={iconTypeMap.get(type)}
         />
       ))}
