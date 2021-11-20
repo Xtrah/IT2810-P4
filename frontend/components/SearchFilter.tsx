@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Box, Center, Collapse, HStack, Select, Text } from 'native-base';
+import { Collapse, Flex, HStack, Select, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import pokemonTypes from '../constants/pokemonTypes';
 import { GET_POKEMON_FILTER } from '../utils/queries';
@@ -36,10 +36,10 @@ const SearchFilter = ({ show }: Props) => {
   }, [pokemonSort, pokemonType]);
 
   return (
-    <Collapse isOpen={show}>
-      <Box
+    <Collapse w="100%" isOpen={show}>
+      <Flex
+        w="100%"
         p={2}
-        alignSelf="stretch"
         m={2}
         borderWidth={2}
         borderColor="red.500"
@@ -47,47 +47,39 @@ const SearchFilter = ({ show }: Props) => {
         rounded="md"
         shadow={4}
       >
-        <HStack>
-          <Box p={4}>
-            <Text fontWeight="500" fontSize="md">
-              Filter types:
-            </Text>
-          </Box>
-
-          <Center>
-            <Select
-              selectedValue={pokemonType}
-              placeholder="Choose type"
-              onValueChange={(filterType) => setPokemonType(filterType)}
-            >
-              <Select.Item label="Show all" value="" />
-              {pokemonTypes.map((type: string) => (
-                <Select.Item label={type} key={type} value={type}>
-                  {type}
-                </Select.Item>
-              ))}
-            </Select>
-          </Center>
+        <HStack p={2} w="100%" justifyContent="center" alignItems="center">
+          <Text w="85px" fontWeight="500" fontSize="md" mr={2}>
+            Filter types
+          </Text>
+          <Select
+            flexGrow={1}
+            selectedValue={pokemonType}
+            placeholder="Choose type"
+            onValueChange={(filterType) => setPokemonType(filterType)}
+          >
+            <Select.Item label="Show all" value="" />
+            {pokemonTypes.map((type: string) => (
+              <Select.Item label={type} key={type} value={type}>
+                {type}
+              </Select.Item>
+            ))}
+          </Select>
         </HStack>
-        <HStack>
-          <Box p={4}>
-            <Text fontWeight="500" fontSize="md">
-              Sort names:
-            </Text>
-          </Box>
-
-          <Center>
-            <Select
-              placeholder="Sort by"
-              selectedValue={pokemonSort}
-              onValueChange={(sortDescending) => setPokemonSort(sortDescending)}
-            >
-              <Select.Item label="Ascending" value="false" />
-              <Select.Item label="Descending" value="true" />
-            </Select>
-          </Center>
+        <HStack p={2} w="100%" justifyContent="center" alignItems="center">
+          <Text w="85px" fontWeight="500" fontSize="md" mr={2}>
+            Sort names
+          </Text>
+          <Select
+            flexGrow={1}
+            placeholder="Sort by"
+            selectedValue={pokemonSort}
+            onValueChange={(sortDescending) => setPokemonSort(sortDescending)}
+          >
+            <Select.Item label="Ascending" value="false" />
+            <Select.Item label="Descending" value="true" />
+          </Select>
         </HStack>
-      </Box>
+      </Flex>
     </Collapse>
   );
 };

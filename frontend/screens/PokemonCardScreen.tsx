@@ -16,7 +16,7 @@ import { RootStackScreenProps } from '../types/navigation';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { GET_POKEMON } from '../utils/queries';
 import getGradientByType from '../utils/getGradientByType';
-import getIconByType from '../utils/getIconByType';
+import iconTypeMap from '../constants/typeIconMap';
 import Gradient from '../components/Gradient';
 
 // This renders the detail screen of pokemons
@@ -66,22 +66,23 @@ function PokemonCardScreen({
           />
         </Gradient>
         <Box mb={5} mt={2} p={2}>
-          <Heading textAlign="left" color="#333">
-            {pokemon.name}
+          <Flex direction="row" alignItems="center">
+            <Heading textAlign="left" color="#333">
+              {pokemon.name}
+            </Heading>
             {pokemon.types.map((type: string) => (
               <Gradient key={type} colors={getGradientByType(type)}>
                 <Image
                   m={2}
-                  display="inline"
                   borderRadius="xl"
                   boxSize="20px"
                   resizeMode="contain"
-                  source={{ uri: getIconByType(type) }}
+                  source={iconTypeMap.get(type)}
                   alt={pokemon.name}
                 />
               </Gradient>
             ))}
-          </Heading>
+          </Flex>
           <Text textAlign="left">{pokemon.description}</Text>
         </Box>
         <Gradient colors={getGradientByType(pokemon.types[0])}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Text, Image } from 'native-base';
 import { PokemonLimited } from '../types/pokemon';
 import getGradientByType from '../utils/getGradientByType';
-import getIconByType from '../utils/getIconByType';
+import iconTypeMap from '../constants/typeIconMap';
 import Gradient from './Gradient';
 
 interface Props {
@@ -30,7 +30,7 @@ const PokemonCard = ({ pokemon }: Props) => (
           alt={type}
           width="5"
           height="5"
-          source={{ uri: getIconByType(type) }}
+          source={iconTypeMap.get(type)}
         />
       ))}
       <Image
@@ -38,7 +38,7 @@ const PokemonCard = ({ pokemon }: Props) => (
         borderRadius="xl"
         boxSize="70px"
         resizeMode="cover"
-        src={pokemon.imageUrl}
+        source={{ uri: pokemon.imageUrl }}
         // Fallback to Bulbasaur if image doesn't load
         fallbackSource={{
           uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',
