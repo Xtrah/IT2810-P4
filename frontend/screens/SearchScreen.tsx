@@ -13,7 +13,7 @@ import { RootStackScreenProps } from '../types/navigation';
 // This value aligns with the hardcoded limit in backend
 const ITEM_FETCH_LIMIT = 10;
 
-// This component contains search input and results
+// Contains search input and results
 export default function SearchScreen({
   navigation,
 }: RootStackScreenProps<'Root'>) {

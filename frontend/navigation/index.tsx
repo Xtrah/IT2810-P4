@@ -21,6 +21,7 @@ import PokemonCardScreen from '../screens/PokemonCardScreen';
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Handles the navigation in the app
 function RootNavigator() {
   return (
     <Stack.Navigator

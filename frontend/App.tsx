@@ -3,10 +3,10 @@ import { ApolloProvider, ApolloClient } from '@apollo/client';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { NativeBaseProvider } from 'native-base';
 import useCachedResources from './utils/hooks/useCachedResources';
 
 import Navigation from './navigation';
-import { NativeBaseProvider } from 'native-base';
 import { cache } from './cache';
 
 export default function App() {
@@ -18,15 +18,14 @@ export default function App() {
 
   if (!isLoadingComplete) {
     return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <ApolloProvider client={client}>
-          <NativeBaseProvider>
-            <Navigation />
-          </NativeBaseProvider>
-        </ApolloProvider>
-      </SafeAreaProvider>
-    );
   }
+  return (
+    <SafeAreaProvider>
+      <ApolloProvider client={client}>
+        <NativeBaseProvider>
+          <Navigation />
+        </NativeBaseProvider>
+      </ApolloProvider>
+    </SafeAreaProvider>
+  );
 }
