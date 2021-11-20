@@ -34,7 +34,7 @@ export default function SearchResults({
   if (!data && loading) {
     return <Spinner color="red.500" accessibilityLabel="Loading data" />;
   }
-  
+
   return (
     <FlatList
       alignSelf="stretch"
