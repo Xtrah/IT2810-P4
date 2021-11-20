@@ -36,7 +36,7 @@ Our goal was a file structure which supports maintainability and where you can f
 - `types` contains the typescript typings.
 - `utils` contains functions which are extracted for easier read or helper functions which are used multiple places.
 - `utils/queries.ts` contains functions for the graphql- queries and -mutations.
-- `App.tsx` is the root component. As for tests, cypress tests are in `/cypress` while the other tests are in `src/__tests__`.
+- `App.tsx` is the root component.
 
 ### 🌆 Backend
 
@@ -124,7 +124,7 @@ We have made the screen **robust** by testing the screen on different web browse
 
 We found that React native did not support SVGs and gradients out of the box. For SVGs one solution was to add a library for supporting it. For our use, we found it suitable to change the original SVGs into PNGs. This may have reduced the image quality, but for this project with small icons, we found it suitable. As for gradients, the styling for React Native did not support gradients. Therefore, we added a [library](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) for this.
 
-We changed how to navigate the page in project4. In project3 we used react-router. We thought we could reuse the logic, as there's a native specific package for [react-router](https://v5.reactrouter.com/native/guides/quick-start), but experienced troubles. Instead we used [React navigation](https://reactnavigation.org/). We used stack navigation which seemed like a more native way of adding navigation, as the screens are put on top of eachother, allowing to press back from a screen. In our case, as we only have three views (Search and result, Create and Detail), we didn't find it necessary to add a back button. Instead we kept the home button available.
+We changed how to navigate the page in project4. In project3 we used react-router. We thought we could reuse the logic, as there's a native specific package for [react-router](https://v5.reactrouter.com/native/guides/quick-start), but experienced troubles. Instead we used [React navigation](https://reactnavigation.org/). We used stack navigation which seemed like a more native way of adding navigation, as the screens are put on top of eachother, allowing to press back from a screen.
 
 ### ⚗️ Code quality and Git
 
