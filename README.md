@@ -10,11 +10,11 @@ This repository is our Pokedex React web app from [project3](https://gitlab.stud
     - [iPhone and iPad](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Iphone+og+Ipad)
     - [Android](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Android)
 2. Download Expo Go for your device:
-    - [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US)
-    - [App Store](https://apps.apple.com/us/app/expo-go/id982107779)
-3. Connect to Expo:
-    - One alternative is to connect to our hosted Expo dev-server following [this link](https://expo.dev/@xtrah/it2810-h21-team-15-project4)
-    - Another alternative is to run the Expo CLI as explained in the next section about hosting the frontend. **NB!**: Remember to have your computer connected to VPN
+    - [Android - Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US)
+    - [iPhone and iPad - Apple App Store](https://apps.apple.com/us/app/expo-go/id982107779)
+3. Connect to Expo _(while connected to VPN)_:
+    - One alternative is to connect to our hosted Expo development server following [this link](https://expo.dev/@xtrah/it2810-h21-team-15-project4)
+    - Another alternative is to run the Expo CLI as explained in the next section about hosting the frontend. 
         - Turn on "Production Mode"
         - Choose a connection-mode (Tunnel, LAN or Local)
 4. Scan the QR-code with your mobile device
@@ -27,12 +27,12 @@ This repository is our Pokedex React web app from [project3](https://gitlab.stud
 - `npm install -g expo-cli && npm install` to install Expo CLI and required dependencies
 - `npm start` to run app using Expo CLI in web browser
 - Navigate to `http://localhost:19002/`
-- Connect to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn) on your computer to use the server we are hosting.
+- Connect to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn) on your computer to use our hosted server.
 
 #### Frontend file structure
 
 ```
-project4
+frontend
 ├───assets
 ├───components
 ├───constants
