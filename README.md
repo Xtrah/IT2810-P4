@@ -2,20 +2,37 @@
 
 This repository is our Pokedex React web app from [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3), developed as a React Native app. React Native allows us to use React to create native iOS & Android applications, using a single codebase that can build to both platforms. As React Native app and a React web app are similar, this documentation includes a lot of repetition from the last project, but we will highlight the differences. We found this suitable, as the documentation will be more readily available for people new to the project. For original documentation, see [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3).
 
-## Development
+## Running the application
 
-### 🏙 Frontend
+### 📱 Run the application on a mobile device
+
+1. Download AnyConnect on your mobile device and connect to NTNU VPN:
+    - [iPhone and iPad](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Iphone+og+Ipad)
+    - [Android](https://innsida.ntnu.no/wiki/-/wiki/Norsk/VPN+p%C3%A5+Android)
+2. Download Expo Go for your device:
+    - [Android - Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US)
+    - [iPhone and iPad - Apple App Store](https://apps.apple.com/us/app/expo-go/id982107779)
+3. Connect to Expo _(while connected to VPN)_:
+    - One alternative is to connect to our hosted Expo development server following [this link](https://expo.dev/@xtrah/it2810-h21-team-15-project4)
+    - Another alternative is to run the Expo CLI as explained in the next section about hosting the frontend. 
+        - Turn on "Production Mode"
+        - Choose a connection-mode (Tunnel, LAN or Local)
+4. Scan the QR-code with your mobile device
+5. Use the app!
+
+### 🏙 Hosting the frontend
 
 <!-- https://docs.expo.dev/workflow/expo-cli/ -->
 
 - `npm install -g expo-cli && npm install` to install Expo CLI and required dependencies
-- `npm run web` to run app using Expo CLI in web browser
-- `npm run test` to run tests
+- `npm start` to run app using Expo CLI in web browser
+- Navigate to `http://localhost:19002/`
+- Connect to [NTNU VPN](https://innsida.ntnu.no/wiki/-/wiki/English/Install+vpn) on your computer to use our hosted server.
 
 #### Frontend file structure
 
 ```
-project4
+frontend
 ├───assets
 ├───components
 ├───constants
@@ -36,11 +53,11 @@ Our goal was a file structure which supports maintainability and where you can f
 - `types` contains the typescript typings.
 - `utils` contains functions which are extracted for easier read or helper functions which are used multiple places.
 - `utils/queries.ts` contains functions for the graphql- queries and -mutations.
-- `App.tsx` is the root component. As for tests, cypress tests are in `/cypress` while the other tests are in `src/__tests__`.
+- `App.tsx` is the root component.
 
 ### 🌆 Backend
 
-The backend is the same as [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3). For easier development it's also added to this repository.
+The backend is the same as [project3](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3). It is currently running on a server and connected to the current frontend. If you wish to run it locally it's also added to this repository. Notice that you have to change the uri in `App.tsx` to reference to your localhost.
 
 - `cd backend`
 - `npm install` to install dependencies
@@ -124,7 +141,7 @@ We have made the screen **robust** by testing the screen on different web browse
 
 We found that React native did not support SVGs and gradients out of the box. For SVGs one solution was to add a library for supporting it. For our use, we found it suitable to change the original SVGs into PNGs. This may have reduced the image quality, but for this project with small icons, we found it suitable. As for gradients, the styling for React Native did not support gradients. Therefore, we added a [library](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) for this.
 
-We changed how to navigate the page in project4. In project3 we used react-router. We thought we could reuse the logic, as there's a native specific package for [react-router](https://v5.reactrouter.com/native/guides/quick-start), but experienced troubles. Instead we used [React navigation](https://reactnavigation.org/). We used stack navigation which seemed like a more native way of adding navigation, as the screens are put on top of eachother, allowing to press back from a screen. In our case, as we only have three views (Search and result, Create and Detail), we didn't find it necessary to add a back button. Instead we kept the home button available.
+We changed how to navigate the page in project4. In project3 we used react-router. We thought we could reuse the logic, as there's a native specific package for [react-router](https://v5.reactrouter.com/native/guides/quick-start), but experienced troubles. Instead we used [React navigation](https://reactnavigation.org/). We used stack navigation which seemed like a more native way of adding navigation, as the screens are put on top of eachother, allowing to press back from a screen.
 
 ### ⚗️ Code quality and Git
 
